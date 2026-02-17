@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config'; // Needed for @dotenv
 import { RedirectMiddleware } from './redirect/redirect.middleware';
 import { SpeakeasyAuthModule } from './demo/speakeasy-auth-demo/speakeasy-auth.module';
 import { ImageLoadingModule } from './demo/image-loading-demo/image-loading.module';
+import { APP_GUARD, Reflector } from '@nestjs/core';
+import { AuthGuard } from './auth/auth.guard';
 @Module({
   imports: [
     ConfigModule.forRoot({  // @dotenv
@@ -19,7 +21,14 @@ import { ImageLoadingModule } from './demo/image-loading-demo/image-loading.modu
     // RedirectController,
     AppController
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    Reflector,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }
+  ],
 })
 // export class AppModule {}
 export class AppModule implements NestModule {
