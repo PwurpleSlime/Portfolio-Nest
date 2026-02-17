@@ -5,14 +5,16 @@ import "dotenv/config"
 import { ConfigModule } from '@nestjs/config'; // Needed for @dotenv
 import { RedirectMiddleware } from './redirect/redirect.middleware';
 import { SpeakeasyAuthModule } from './speakeasy-auth/speakeasy-auth.module';
+import { ImageLoadingModule } from './image-loading/image-loading.module';
 @Module({
   imports: [
-    ConfigModule.forRoot({
+    ConfigModule.forRoot({  // @dotenv
       isGlobal: true,
       envFilePath: 'env'
     }),
     SpeakeasyAuthModule,
-  ], // @dotenv
+    ImageLoadingModule,
+  ],
   controllers: [
     // RedirectController,
     AppController
