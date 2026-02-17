@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import "dotenv/config"
 import { ConfigModule } from '@nestjs/config'; // Needed for @dotenv
 import { RedirectMiddleware } from './redirect/redirect.middleware';
-import { SpeakeasyAuthModule } from './speakeasy-auth/speakeasy-auth.module';
-import { ImageLoadingModule } from './image-loading/image-loading.module';
+import { SpeakeasyAuthModule } from './demo/speakeasy-auth-demo/speakeasy-auth.module';
+import { ImageLoadingModule } from './demo/image-loading-demo/image-loading.module';
 @Module({
   imports: [
     ConfigModule.forRoot({  // @dotenv
