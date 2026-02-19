@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { Observable } from "rxjs";
 import { IS_PUBLIC_KEY } from "./public.decorator";
 import { ROLES_KEY } from "./roles.decorator";
 
@@ -17,16 +16,19 @@ export class AuthGuard implements CanActivate {
             IS_PUBLIC_KEY,
             [context.getHandler(), context.getClass],
         )
-
+        console.log('Before Public');
+        
         if (isPublic) return true
-
+        console.log('After Public');
+        
         const request = context.switchToHttp().getRequest()
-        const authHeader = request.headers.authorization
+        const authHeader = request.headers
+        console.log(`${authHeader} - Auth Header`)
+        console.log(authHeader)
 
-        if (!authHeader?.startsWith('Bearer ')) {
+        if (!authHeader.authorization?.startsWith('Bearer ')) {
             throw new UnauthorizedException('Missing Required Auth Token')
         }
-
         const token = authHeader.split(' ')[1]
         // decode / figure out encode token
         
@@ -36,6 +38,7 @@ export class AuthGuard implements CanActivate {
         if (!requiredRoles || requiredRoles.length === 0) {
             return true
         }
+
 
         // Figure out how to designate Roles
 //         const userRoles: string[] = decodedToken.roles ?? [] // What is this handling

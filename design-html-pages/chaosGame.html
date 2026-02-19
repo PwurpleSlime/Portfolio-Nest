@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="Score">Score: 0</h1>
+    <h4 id="Tip">Helpful Tip: Select the button that will make you win</h4>
+    <button onclick={runGamble()} id="MainButtonOne"><h3>Win Button</h3></button>
+    <button onclick={runGamble()} id="MainButtonTwo"><h3>Lose Button</h3></button>
+    <button onClick={runStop()} style="margin: 0px 72px 0px 300px;;"><h1>STOP</h1></button>
+    <script>
+        const scoreBoard = document.getElementById("Score")
+        let lose = false
+        let score = 0
+        const tip = document.getElementById("Tip")
+        const b1 = document.getElementById("MainButtonOne")
+        const b2 = document.getElementById("MainButtonTwo")
+        let timeOutId
+        function runGamble(){
+            clearTimeout(timeOutId)
+            const r = Math.random()
+
+            if (r < 0.35) {
+                if (r<=0.03) {
+                    alert("I don't think you earned that point")
+                    return
+                }
+                updateScore(1)
+                if (r < 0.13) {
+                    let b1text = b1.textContent
+                    let b2text = b2.textContent
+                    b1.textContent = b2text
+                    b2.textContent = b1text
+                }
+            }else if (r < 0.50) {
+                updateScore(-1)
+            }else {}
+
+            tip.textContent = "Helpful Tip: NICE CHOICE"
+            timeOutId = setTimeout(() => {
+                tip.textContent = "Helpful Tip: Now you will want to pick the option that lets you win"
+            }, 2000);
+        }
+        function updateScore(scoreChange) {
+            setTimeout(() => {
+                score += scoreChange
+                scoreBoard.textContent = "Score: " + score
+                b1.style = ""
+            }, 500);
+        }
+        function runStop(){
+            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1"
+        }
+        setInterval(() => {
+            if (score<=0) {
+                if (lose) {
+                    console.log('lose true');
+                    
+                }else {
+                    alert("YOU LOSE GET OUT")
+                    
+                    window.location.href = "https://www.youtube.com/watch?v=XqZsoesa55w&list=RDXqZsoesa55w&start_radio=1"
+                    lose = true
+                }
+            }
+            if (score>=10) {
+                tip.textContent = "YOU WIN!!!!"
+                setTimeout(() => {
+                    tip.textContent = "Actually you didn't earn that"
+                    updateScore(-20)
+                }, 800);
+
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

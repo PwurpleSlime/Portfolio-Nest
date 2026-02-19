@@ -8,6 +8,7 @@ import { SpeakeasyAuthModule } from './demo/speakeasy-auth-demo/speakeasy-auth.m
 import { ImageLoadingModule } from './demo/image-loading-demo/image-loading.module';
 import { APP_GUARD, Reflector } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { ChaosCodingChallengeModule } from './chaos-coding-challenge/chaos-coding-challenge.module';
 @Module({
   imports: [
     ConfigModule.forRoot({  // @dotenv
@@ -16,6 +17,7 @@ import { AuthGuard } from './auth/auth.guard';
     }),
     SpeakeasyAuthModule,
     ImageLoadingModule,
+    ChaosCodingChallengeModule,
   ],
   controllers: [
     // RedirectController,
