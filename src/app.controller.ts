@@ -2,6 +2,7 @@ import { Controller, Get, Version } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Public } from './auth/public.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { TFA } from './auth/tfa.decorator';
 
 @Controller()
 export class AppController {
@@ -20,5 +21,11 @@ export class AppController {
   getHelloWorld() {
     return this.appService.getHello()
   }
-  
+  @TFA()
+  @Version('1')
+  @ApiBearerAuth('access-token')
+  @Get('/test2FA')
+  async testTFA() {
+    return this.appService.getHello()
+  }
 }

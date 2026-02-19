@@ -19,7 +19,12 @@ async function bootstrap() {
   .setTitle("Jaydee White's Portfolio API Doc")
   .setDescription("API Documentation")
   .setVersion("1.0")
-  .addBearerAuth() // For Eventual Auth @Work
+  .addBearerAuth({
+    type: 'http',
+    scheme: 'bearer',
+    bearerFormat: 'JWT',
+    in: 'header'
+  }, 'access-token') 
   .build()
 
   const document = SwaggerModule.createDocument(app, config) // @Swagger @Functional

@@ -2,6 +2,8 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { Reflector } from "@nestjs/core";
 import { IS_PUBLIC_KEY } from "./public.decorator";
 import { ROLES_KEY } from "./roles.decorator";
+import { IS_TFA_KEY } from "./tfa.decorator";
+import speakeasy from 'speakeasy'
 
 
 @Injectable()
@@ -21,17 +23,33 @@ export class AuthGuard implements CanActivate {
         if (isPublic) return true
         console.log('After Public');
         
+        const isTFA = this.reflector.getAllAndOverride<boolean>(
+            IS_TFA_KEY,
+            [context.getHandler(), context.getClass()]
+        )
         const request = context.switchToHttp().getRequest()
-        const authHeader = request.headers
-        console.log(`${authHeader} - Auth Header`)
-        console.log(authHeader)
+        const authHeader = request.headers.authorization
 
-        if (!authHeader.authorization?.startsWith('Bearer ')) {
+        if (!authHeader.startsWith('Bearer ')) {
             throw new UnauthorizedException('Missing Required Auth Token')
         }
+
         const token = authHeader.split(' ')[1]
-        // decode / figure out encode token
-        
+
+        if (isTFA) {
+            try {
+                const base32 = process.env.TFASecret!
+                const tokenValidates = speakeasy.totp.verify({ secret: base32, encoding: 'base32', token: token, window: 1})
+
+                if (tokenValidates) {
+                    return true
+                }else {
+                    return false
+                }
+            } catch (err) {
+                console.error(err)
+            }
+        }        
 
         const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [context.getHandler(), context.getClass()])
 

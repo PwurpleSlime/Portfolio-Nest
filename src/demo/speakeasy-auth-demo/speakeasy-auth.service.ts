@@ -15,7 +15,7 @@ export class SpeakeasyAuthService {
             const path = `/speakeasy2fa/user/${id}`
             const temp_secret = speakeasy.generateSecret()
             this.db.push(path, { id, temp_secret})
-            return temp_secret.base32
+            return {secret: temp_secret.base32, id: id}
         } catch (error) {
             console.error(error)
         }
