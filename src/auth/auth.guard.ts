@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
         const request = context.switchToHttp().getRequest()
         const authHeader = request.headers.authorization
 
-        if (!authHeader|| !authHeader.startsWith('Bearer ')) {
+        if (!authHeader|| !authHeader.startsWith('Bearer ')) {            
             throw new UnauthorizedException('Missing Required Auth Token')
         }
 

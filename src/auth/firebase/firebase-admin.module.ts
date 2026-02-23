@@ -11,6 +11,7 @@ export const FirebaseAdminProvider = {
                 )
             })
         }
+        return admin
     }
 }
 
