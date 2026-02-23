@@ -1,11 +1,11 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { IS_PUBLIC_KEY } from "./decorators/public.decorator";
-import { ROLES_KEY } from "./decorators/roles.decorator";
+import { ROLES_KEY } from "./decorators/roles/roles.decorator";
 import { IS_TFA_KEY } from "./decorators/tfa.decorator";
 import speakeasy from 'speakeasy'
 import * as admin from 'firebase-admin'
-import { ROLES_HIREACHY as ROLES_HIERARCHY } from "./roles-hierarchy";
+import { ROLES_HIREACHY as ROLES_HIERARCHY } from "./decorators/roles/roles-hierarchy";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
