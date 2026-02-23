@@ -1,8 +1,8 @@
 import { Controller, Get, Version } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Public } from './auth/public.decorator';
+import { Public } from './auth/decorators/public.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { TFA } from './auth/tfa.decorator';
+import { TFA } from './auth/decorators/tfa.decorator';
 
 @Controller()
 export class AppController {

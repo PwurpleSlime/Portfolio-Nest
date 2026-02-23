@@ -9,6 +9,8 @@ import { ImageLoadingModule } from './demo/image-loading-demo/image-loading.modu
 import { APP_GUARD, Reflector } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
 import { ChaosCodingChallengeModule } from './chaos-coding-challenge/chaos-coding-challenge.module';
+import { FirebaseAdminProvider } from './auth/firebase/firebase-admin.module';
+import { FirebaseAuthRolesModule } from './firebase-auth-roles/firebase-auth-roles.module';
 @Module({
   imports: [
     ConfigModule.forRoot({  // @dotenv
@@ -18,6 +20,7 @@ import { ChaosCodingChallengeModule } from './chaos-coding-challenge/chaos-codin
     SpeakeasyAuthModule,
     ImageLoadingModule,
     ChaosCodingChallengeModule,
+    FirebaseAuthRolesModule,
   ],
   controllers: [
     // RedirectController,
@@ -25,6 +28,7 @@ import { ChaosCodingChallengeModule } from './chaos-coding-challenge/chaos-codin
   ],
   providers: [
     AppService,
+    FirebaseAdminProvider,
     Reflector,
     {
       provide: APP_GUARD,

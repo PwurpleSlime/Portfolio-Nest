@@ -1,10 +1,11 @@
 import { Body, Controller, Get, Post, Version } from '@nestjs/common';
 import { SpeakeasyAuthService } from './speakeasy-auth.service';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { authDTO } from './dto/auth.dto';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('speakeasy-auth')
+@ApiTags("Speakeasy Auth", "Demo")
 export class SpeakeasyAuthController {
   constructor(private readonly speakeasyAuthService: SpeakeasyAuthService) {}
 
