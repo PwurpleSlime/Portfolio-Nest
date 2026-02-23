@@ -6,7 +6,8 @@ import { IS_TFA_KEY } from "./decorators/tfa.decorator";
 import speakeasy from 'speakeasy'
 import * as admin from 'firebase-admin'
 import { ROLES_HIREACHY as ROLES_HIERARCHY } from "./decorators/roles/roles-hierarchy";
-
+import { verifyToken } from '@clerk/backend'
+import { IS_CLERK_KEY } from "./decorators/clerk.decorator";
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(
@@ -25,10 +26,6 @@ export class AuthGuard implements CanActivate {
         if (isPublic) return true
         console.log('After Public');
         
-        const isTFA = this.reflector.getAllAndOverride<boolean>(
-            IS_TFA_KEY,
-            [context.getHandler(), context.getClass()]
-        )
         const request = context.switchToHttp().getRequest()
         const authHeader = request.headers.authorization
 
@@ -38,6 +35,30 @@ export class AuthGuard implements CanActivate {
 
         const token = authHeader.split(' ')[1]
 
+        const isTFA = this.reflector.getAllAndOverride<boolean>(
+            IS_TFA_KEY,
+            [context.getHandler(), context.getClass()]
+        )
+        const isClerk = this.reflector.getAllAndOverride<boolean>(
+            IS_CLERK_KEY,
+            [context.getHandler(), context.getClass()]
+        )
+        if (isClerk) {
+        try {
+            const session = await verifyToken(token, {
+                secretKey: process.env.CLERK_SECRET_KEY,
+            });
+
+            request.user = session;
+            if (session) {
+                return true
+            } else {
+                false
+            }
+        } catch (err) {
+            throw new UnauthorizedException('Invalid Clerk token');
+        }
+        }
         if (isTFA) {
             try {
                 const base32 = process.env.TFASecret!

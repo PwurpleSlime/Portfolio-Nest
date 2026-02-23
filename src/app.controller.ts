@@ -4,6 +4,7 @@ import { Public } from './auth/decorators/public.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { TFA } from './auth/decorators/tfa.decorator';
 import { Roles } from './auth/decorators/roles/roles.decorator';
+import { Clerk } from './auth/decorators/clerk.decorator';
 
 @Controller()
 export class AppController {
@@ -34,6 +35,13 @@ export class AppController {
   @ApiBearerAuth('access-token')
   @Get('/testFirebaseAdmin')
   testFirebase() {
-    return this.appService.getHello
+    return this.appService.getHello()
+  }
+  @Clerk()
+  @Version('1')
+  @ApiBearerAuth('access-token')
+  @Get('/testClerk')
+  testClerk() {
+    return this.appService.getHello()
   }
 }
