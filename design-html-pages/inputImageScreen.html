@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaydee White Image Input Portfolio</title>
+</head>
+<body>
+    <input type="file" id="aFile">
+    <img src="" alt="The Image Inputed" id="aImage">
+
+    <script>
+        const aFile = document.getElementById("aFile")
+        const aImage = document.getElementById("aImage")
+
+        aFile.addEventListener("change", (e) => {
+            onFileChange(e)
+        })
+
+        async function onFileChange(e) {
+            let target = e.target.files[0]
+            console.log(e.target)
+
+            const fd = new FormData()
+            fd.append("image", target)
+
+            const res = await fetch("https://image-shrink-backend-seven.vercel.app/api/compress", {
+                method: "POST",
+                body: fd
+            }) // This needs to be in the env
+            if (!res.ok) {
+                alert(`Server Error Occured: ${res.status}`)
+            }
+            const resBlob = await res.blob()
+
+            const imageURL = URL.createObjectURL(resBlob)
+            aImage.src = imageURL
+        }
+    </script>
+</body>
+</html>

@@ -25,12 +25,15 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+## Project setup for Morgan
 
 ```bash
 $ npm install
 ```
-
+- Then run the route /sqlite-task-manager/startDatabase
+- After that you can manipulate the database using @Post '/addItem' @Get '/' @Post'/toggleItemCompletion/:uid', and @Delete '/deleteItem/:uid'
+- In order for any route other than the get route '/' require an 'access-token' these can be obtained from running ts-node generate-firebase-token.ts this will generate a firebase token using your email and password from the .env to log into firebase.
+- The .env should be obtained from the gist
 ## Compile and run the project
 
 ```bash

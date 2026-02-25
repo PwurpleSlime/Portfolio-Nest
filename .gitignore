@@ -2,6 +2,12 @@
 /myDatabase.json
 .myDatabase.json
 ./myDatabase.json
+
+# Task manager db
+/sqlite-task-manager.db
+.sqlite-task-manager.db
+./sqlite-task-manager.db
+
 # compiled output
 /dist
 /node_modules

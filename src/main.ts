@@ -19,7 +19,12 @@ async function bootstrap() {
   .setTitle("Jaydee White's Portfolio API Doc")
   .setDescription("API Documentation")
   .setVersion("1.0")
-  .addBearerAuth() // For Eventual Auth @Work
+  .addBearerAuth({
+    type: 'http',
+    scheme: 'bearer',
+    bearerFormat: 'JWT',
+    in: 'header'
+  }, 'access-token') 
   .build()
 
   const document = SwaggerModule.createDocument(app, config) // @Swagger @Functional
@@ -33,4 +38,4 @@ bootstrap();
 // Notes
 // @Functional - Where something is so that be app as a whole is functional 
 // @Work - Things to work on when I get the chance
-// Npm installs so far - @nestjs/swagger, @nestjs/common, dotenv, @nestjs/config, express(for the redirect), speakeasy, uuid, node-json-db
+// Npm installs so far - @nestjs/swagger, @nestjs/common, dotenv, @nestjs/config, express(for the redirect), speakeasy, uuid, node-json-db, firebase, firebase-admin, @clerk/backend, better-sqlite3

@@ -4,20 +4,41 @@ import { AppService } from './app.service';
 import "dotenv/config"
 import { ConfigModule } from '@nestjs/config'; // Needed for @dotenv
 import { RedirectMiddleware } from './redirect/redirect.middleware';
-import { SpeakeasyAuthModule } from './speakeasy-auth/speakeasy-auth.module';
+import { SpeakeasyAuthModule } from './demo/speakeasy-auth-demo/speakeasy-auth.module';
+import { ImageLoadingModule } from './demo/image-loading-demo/image-loading.module';
+import { APP_GUARD, Reflector } from '@nestjs/core';
+import { AuthGuard } from './auth/auth.guard';
+import { ChaosCodingChallengeModule } from './challenge/chaos-coding-challenge/chaos-coding-challenge.module';
+import { FirebaseAdminProvider } from './auth/firebase/firebase-admin.module';
+import { FirebaseAuthRolesModule } from './auth/auth-routes/firebase-auth-roles/firebase-auth-roles.module';
+import { ClerkModule } from './auth/auth-routes/clerk/clerk.module';
+import { SqliteTaskManagerModule } from './demo/sqlite-task-manager/sqlite-task-manager.module';
 @Module({
   imports: [
-    ConfigModule.forRoot({
+    ConfigModule.forRoot({  // @dotenv
       isGlobal: true,
       envFilePath: 'env'
     }),
     SpeakeasyAuthModule,
-  ], // @dotenv
+    ImageLoadingModule,
+    ChaosCodingChallengeModule,
+    FirebaseAuthRolesModule,
+    ClerkModule,
+    SqliteTaskManagerModule,
+  ],
   controllers: [
     // RedirectController,
     AppController
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    FirebaseAdminProvider,
+    Reflector,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }
+  ],
 })
 // export class AppModule {}
 export class AppModule implements NestModule {
