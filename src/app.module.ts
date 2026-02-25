@@ -12,6 +12,7 @@ import { ChaosCodingChallengeModule } from './challenge/chaos-coding-challenge/c
 import { FirebaseAdminProvider } from './auth/firebase/firebase-admin.module';
 import { FirebaseAuthRolesModule } from './auth/auth-routes/firebase-auth-roles/firebase-auth-roles.module';
 import { ClerkModule } from './auth/auth-routes/clerk/clerk.module';
+import { SqliteTaskManagerModule } from './demo/sqlite-task-manager/sqlite-task-manager.module';
 @Module({
   imports: [
     ConfigModule.forRoot({  // @dotenv
@@ -23,6 +24,7 @@ import { ClerkModule } from './auth/auth-routes/clerk/clerk.module';
     ChaosCodingChallengeModule,
     FirebaseAuthRolesModule,
     ClerkModule,
+    SqliteTaskManagerModule,
   ],
   controllers: [
     // RedirectController,
