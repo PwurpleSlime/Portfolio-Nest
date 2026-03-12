@@ -44,20 +44,20 @@ export class AuthGuard implements CanActivate {
             [context.getHandler(), context.getClass()]
         )
         if (isClerk) {
-        try {
-            const session = await verifyToken(token, {
-                secretKey: process.env.CLERK_SECRET_KEY,
-            });
+            try {
+                const session = await verifyToken(token, {
+                    secretKey: process.env.CLERK_SECRET_KEY,
+                });
 
-            request.user = session;
-            if (session) {
-                return true
-            } else {
-                false
+                request.user = session;
+                if (session) {
+                    return true
+                } else {
+                    false
+                }
+            } catch (err) {
+                throw new UnauthorizedException('Invalid Clerk token');
             }
-        } catch (err) {
-            throw new UnauthorizedException('Invalid Clerk token');
-        }
         }
         if (isTFA) {
             try {
