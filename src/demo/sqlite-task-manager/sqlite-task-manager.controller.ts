@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Version } from '@nestjs/com
 import { SqliteTaskManagerService } from './sqlite-task-manager.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles/roles.decorator';
-import { Public } from 'src/auth/decorators/public.decorator';
+import { Public } from '../../auth/decorators/public.decorator';
 import { addItemDTO } from './dto/addItem.dto';
 
 @ApiTags('Sqlite Task Manager')

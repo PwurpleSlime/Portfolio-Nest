@@ -1,6 +1,6 @@
 import { Controller, Get, Version } from '@nestjs/common';
 import { ChaosCodingChallengeService } from './chaos-coding-challenge.service';
-import { Public } from 'src/auth/decorators/public.decorator';
+import { Public } from '../../auth/decorators/public.decorator';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('chaos-coding-challenge')

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import { getHTMLPage } from 'src/utility/getHTMLpage';
+import { getHTMLPage } from '../../utility/getHTMLpage';
 
 @Injectable()
 export class ChaosCodingChallengeService {
