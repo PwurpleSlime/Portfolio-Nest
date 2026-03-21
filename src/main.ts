@@ -27,9 +27,21 @@ async function bootstrap() {
   }, 'access-token') 
   .build()
 
-  const document = SwaggerModule.createDocument(app, config) // @Swagger @Functional
-  SwaggerModule.setup("/api-docs", app, document)
-
+  // const document = SwaggerModule.createDocument(app, config) // @Swagger @Functional
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: true
+  });
+  SwaggerModule.setup('/api-docs', app, document, {
+    customSiteTitle: 'Portfolio API Docs',
+    swaggerOptions: {
+      url: '/api-docs-json', // forces correct spec path
+    },
+    customCssUrl: 'https://unpkg.com/swagger-ui-dist/swagger-ui.css',
+    customJs: [
+      'https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js',
+      'https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js',
+    ],
+  });
   await app.listen(process.env.PORT ?? 3000); // @Functional
 
 }
