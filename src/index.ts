@@ -18,25 +18,23 @@ async function bootstrap() {
   });
 
   // Only enable Swagger when you want it
-  if (process.env.NODE_ENV !== 'production') {
-    const config = new DocumentBuilder()
-      .setTitle('Portfolio API Doc')
-      .setDescription('API Documentation')
-      .setVersion('1.0')
-      .addBearerAuth(
-        {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-          in: 'header',
-        },
-        'access-token',
-      )
-      .build();
+  const config = new DocumentBuilder()
+    .setTitle('Portfolio API Doc')
+    .setDescription('API Documentation')
+    .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+      },
+      'access-token',
+    )
+    .build();
 
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api-docs', app, document);
-  }
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api-docs', app, document);
 
   await app.init();
 
