@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Version } from '@nestjs/common';
 import { SpeakeasyAuthService } from './speakeasy-auth.service';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { authDTO } from './dto/auth.dto';
-import { Public } from 'src/auth/decorators/public.decorator';
+import { Public } from '../../auth/decorators/public.decorator';
 
 @Controller('speakeasy-auth')
 @ApiTags("Speakeasy Auth", "Demo")
