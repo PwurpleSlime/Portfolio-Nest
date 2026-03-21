@@ -33,7 +33,9 @@ async function bootstrap() {
     )
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: true
+  });
   SwaggerModule.setup('api-docs', app, document, {
     useGlobalPrefix: false, 
     customCssUrl: 'https://unpkg.com/swagger-ui-dist/swagger-ui.css',
