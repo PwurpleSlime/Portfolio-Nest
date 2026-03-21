@@ -37,7 +37,10 @@ async function bootstrap() {
     ignoreGlobalPrefix: true
   });
   SwaggerModule.setup('api-docs', app, document, {
-    useGlobalPrefix: false, 
+    customSiteTitle: 'Portfolio API Docs',
+    swaggerOptions: {
+      url: '/api-docs-json', // forces correct spec path
+    },
     customCssUrl: 'https://unpkg.com/swagger-ui-dist/swagger-ui.css',
     customJs: [
       'https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js',
