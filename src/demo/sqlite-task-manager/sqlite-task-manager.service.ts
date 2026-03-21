@@ -1,12 +1,22 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import Database from "better-sqlite3"
 import { addItemDTO } from './dto/addItem.dto';
+import path from 'path';
+import fs from 'fs';
 
 @Injectable()
 export class SqliteTaskManagerService{
     db: Database.Database
     constructor(){
-        this.db = new Database('tmp/sqlite-task-manager.db')
+        const dbDir = '/tmp'; // must be absolute
+        const dbPath = path.join(dbDir, 'sqlite-task-manager.db');
+
+        // Ensure directory exists (important for serverless)
+        if (!fs.existsSync(dbDir)) {
+            fs.mkdirSync(dbDir, { recursive: true });
+        }
+
+        this.db = new Database(dbPath);
     }
 
     startDatabase() {
