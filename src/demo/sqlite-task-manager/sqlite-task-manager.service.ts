@@ -6,7 +6,7 @@ import { addItemDTO } from './dto/addItem.dto';
 export class SqliteTaskManagerService{
     db: Database.Database
     constructor(){
-        this.db = new Database('sqlite-task-manager.db')
+        this.db = new Database('tmp/sqlite-task-manager.db')
     }
 
     startDatabase() {
