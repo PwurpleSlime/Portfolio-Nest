@@ -36,7 +36,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config, {
     ignoreGlobalPrefix: true
   });
-  SwaggerModule.setup('api-docs', app, document, {
+  SwaggerModule.setup('/api-docs', app, document, {
     customSiteTitle: 'Portfolio API Docs',
     swaggerOptions: {
       url: '/api-docs-json', // forces correct spec path
