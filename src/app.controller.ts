@@ -5,6 +5,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { TFA } from './auth/decorators/tfa.decorator';
 import { Roles } from './auth/decorators/roles/roles.decorator';
 import { Clerk } from './auth/decorators/clerk.decorator';
+import { getHTMLPage } from './utility/getHTMLpage';
 
 @Controller()
 export class AppController {
@@ -15,7 +16,13 @@ export class AppController {
   @Version('1')
   @Get()
   async getHello() {
-    return await this.appService.getHTMLOpenPage();
+    return await getHTMLPage('loadingScreen.html')
+  }
+  @Public()
+  @Version('1')
+  @Get('/aboutMe')
+  async getAboutMe() {
+    return await getHTMLPage('aboutMe.html')
   }
   @Public()
   @Version('2')
