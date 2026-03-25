@@ -5,7 +5,7 @@ import { Roles } from 'src/auth/decorators/roles/roles.decorator';
 import { Public } from '../../auth/decorators/public.decorator';
 import { addItemDTO } from './dto/addItem.dto';
 
-@ApiTags('Sqlite Task Manager')
+@ApiTags('Sqlite Task Manager', 'Demo')
 @Controller('sqlite-task-manager')
 export class SqliteTaskManagerController {
   constructor(private readonly sqliteTaskManagerService: SqliteTaskManagerService) {}
