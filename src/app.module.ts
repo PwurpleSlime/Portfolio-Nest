@@ -13,12 +13,12 @@ import { FirebaseAdminProvider } from './auth/firebase/firebase-admin.module';
 import { FirebaseAuthRolesModule } from './auth/auth-routes/firebase-auth-roles/firebase-auth-roles.module';
 import { ClerkModule } from './auth/auth-routes/clerk/clerk.module';
 import { SqliteTaskManagerModule } from './demo/sqlite-task-manager/sqlite-task-manager.module';
-import { MongoDbModule } from './demo/mongo-db/mongo-db.module';
-import { MongooseModule } from '@nestjs/mongoose'
+// import { MongoDbModule } from './demo/mongo-db/mongo-db.module';
+// import { MongooseModule } from '@nestjs/mongoose'
 
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@localhost:27017/${process.env.MONGO_COLLECTION ?? 'test'}?authSource=admin`),
+    // MongooseModule.forRoot(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@localhost:27017/${process.env.MONGO_COLLECTION ?? 'test'}?authSource=admin`),
     ConfigModule.forRoot({  // @dotenv
       isGlobal: true,
       envFilePath: 'env'
@@ -29,7 +29,7 @@ import { MongooseModule } from '@nestjs/mongoose'
     FirebaseAuthRolesModule,
     ClerkModule,
     SqliteTaskManagerModule,
-    MongoDbModule,
+    // MongoDbModule,
   ],
   controllers: [
     // RedirectController,
