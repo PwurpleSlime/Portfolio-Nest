@@ -5,25 +5,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Three.js Scene</title>
 <style>
-    body { margin: 0; overflow: hidden; }
+    :root {
+        --text: #e2e8f0;
+        --bg: #0f172a;
+        --underlinePurple: #551A8B
+    }
+    html, body {
+        background-color: var(--bg);
+    }
+    body { 
+        margin: 0; 
+        overflow: hidden;
+        /* background-color: green; */
+    }
     canvas { display: block; }
+    a {
+        color: var(--text);
+        text-decoration: underline;
+        text-decoration-color: var(--underlinePurple);
+    }
+    a:active {
+        text-decoration-color: red;
+
+    }
+    main {
+        position: absolute;
+        z-index: 2;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
 </style>
 </head>
 <body>
-    <a href="/api-docs"><h1>Bring to the Api-Docs</h1></a>
-    <a href="/helloWorld"><h1>Bring to Hello World</h1></a>
-    <a href="/aboutMe"><h1>Bring to the About Me Page</h1></a>
+    <main>
+        <a href="/api-docs"><h1>Bring to the Api-Docs</h1></a>
+        <a href="/aboutMe"><h1>Bring to the About Me Page</h1></a>
+    </main>
 <script type="module">
     import * as THREE from 'https://unpkg.com/three@0.165.0/build/three.module.js';
 
-    // Scene setup
+    // Scene
     const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0f172a)
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Add a cube
+    // Cube
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshStandardMaterial({ color: 0x007bff });
     const cube = new THREE.Mesh(geometry, material);
@@ -35,6 +68,27 @@
     scene.add(light);
 
     camera.position.z = 3;
+
+    function makeStars(range, minRange, amount, r, g, b, size) {
+        if (r==0) r = 1
+        if (b==0) b = 1
+        if (g==0) g = 0
+        for (let i = 0; i < amount; i++) {
+            const x = Math.random()*range - Math.random()*range
+            const y = Math.random()*range - Math.random()*range
+            const z = Math.random()*range - Math.random()*range
+            if (Math.abs(x) < minRange &&  Math.abs(y) < minRange && Math.abs(z) < minRange){
+                continue
+            }else{
+                const starGeometry = new THREE.SphereGeometry(size, 32, 32)
+                const starMesh = new THREE.MeshBasicMaterial({ color: new THREE.Color((r)/255,(g)/255,(b)/255) })
+                const star = new THREE.Mesh( starGeometry, starMesh)
+                star.position.set( x, y, z )
+                scene.add(star)
+            }
+        }
+    }
+    makeStars(15,10,500,226,232,240,0.05)
 
     // Animation loop
     function animate() {

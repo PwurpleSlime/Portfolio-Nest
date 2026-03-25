@@ -13,13 +13,13 @@ export class AppController {
 
   @Public()
   // @ApiBearerAuth('access-token')
-  @Version('1')
+  @Version('2')
   @Get()
   async getHello() {
     return await getHTMLPage('loadingScreen.html')
   }
   @Public()
-  @Version('1')
+  @Version('2')
   @Get('/aboutMe')
   async getAboutMe() {
     return await getHTMLPage('aboutMe.html')

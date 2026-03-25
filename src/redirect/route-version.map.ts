@@ -5,5 +5,6 @@ export const ROUTE_VERSION_MAP: Array<{
   version: string;
 }> = [
   { prefix: '/helloWorld', version: 'v2' },
-  { prefix: '/speakeasy-auth/register', version: 'v1'}
+  { prefix: '/speakeasy-auth/register', version: 'v1'},
+  { prefix: '/aboutMe', version: 'v2'}
 ];
