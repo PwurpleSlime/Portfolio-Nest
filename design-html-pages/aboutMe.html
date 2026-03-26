@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me</title>
-
+    <!-- Main Page -->
     <style>
         :root {
             --bg: #0f172a;
@@ -74,26 +74,19 @@
             margin-bottom: 8px;
             border-radius: 8px;
             transition: background 0.2s ease, transform 0.2s ease;
-            position: relative; /* for tooltip */
+            position: relative; 
             cursor: pointer;
         }
 
         ul li:hover {
             background: #334155;
-            transform: translateX(3px); /* small movement, less disruptive */
+            transform: translateX(3px); 
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-        }
-
-        .card {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 12px;
-            transition: transform 0.2s ease, background 0.2s ease;
         }
 
         footer {
@@ -111,6 +104,23 @@
             color: inherit;
         }
 
+        @media (max-width: 1024px) {
+            ul li {
+                display: block;
+                padding: 10px;
+            }
+
+
+        }
+    </style>
+    <!-- Cards -->
+    <style>
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
         .card a {
             display: block;
         }
@@ -121,6 +131,9 @@
             background: #334155;
         }
 
+    </style>
+    <!-- Past Projects -->
+    <style>
         /* Tooltip styling */
         .tooltip {
             position: absolute;
@@ -159,6 +172,7 @@
             z-index: 1002;
         }
         /* Show tooltip on hover */
+
         li:hover .tooltip {
             opacity: 1;
             transform: translateY(-50%) scale(1);
@@ -166,15 +180,7 @@
         }
 
 
-
-
-        /* Mobile / phones */
         @media (max-width: 1024px) {
-            ul li {
-                display: block;
-                padding: 10px;
-            }
-
             .tooltip {
                 left: auto;
                 right: 0;
@@ -192,6 +198,32 @@
                 pointer-events: auto;
                 transform: translateY(0) scale(1);
             }
+
+        }
+    </style>
+    <!--  Contact Information -->
+    <style>
+        .copy-text {
+            cursor: pointer;
+            text-decoration: underline dotted;
+        }
+        .copy-text:active {
+            color: var(--accent)
+        }
+        .copy-tooltip {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            background-color: var(--accent);
+            color: black;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .copy-tooltip.show {
+            opacity: 1;
         }
     </style>
 </head>
@@ -359,12 +391,54 @@
     </ul>
     <footer>
         <h2>Contact Information</h2>
-        <h3>Personal Phone Number - (785)-874-8019</h3>
-        <h3>Personal Email - jddubble2@gmail.com</h3>
-        <h3>School Email - jaydee.white@fhnw.edu</h3>
+        <h3>Personal Phone Number - <span class="copy-text" data-copy="785-874-8019">(785)-874-8019</span></h3>
+        <h3>Personal Email - <span class="copy-text" data-copy="jddubble2@gmail.com">jddubble2@gmail.com</span></h3>
+        <h3>School Email - <span class="copy-text" data-copy="jaydee.white@fhnw.edu">jaydee.white@fhnw.edu</span></h3>
     </footer>
 
 </div>
+    <script>
+        document.querySelectorAll('.copy-text').forEach(el => {
+            let isCooldown = false; // prevent spamming
 
+            el.addEventListener('click', async () => {
+                if (isCooldown) return; // ignore clicks while active
+
+                const text = el.dataset.copy;
+                isCooldown = true;
+
+                try {
+                    // Modern Clipboard API
+                    await navigator.clipboard.writeText(text);
+                } catch (err) {
+                    // Fallback for older browsers / iOS Safari
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.focus();
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                    } catch {}
+                    document.body.removeChild(textarea);
+                }
+
+                // Create tooltip
+                let tooltip = document.createElement('span');
+                tooltip.className = 'copy-tooltip show';
+                tooltip.innerText = 'Copied!';
+                el.parentNode.appendChild(tooltip);
+
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                    tooltip.remove();
+                    isCooldown = false; // allow next click
+                }, 3000);
+            });
+        });
+    </script>
 </body>
 </html>
