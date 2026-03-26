@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me</title>
-
+    <!-- Main Page -->
     <style>
         :root {
             --bg: #0f172a;
@@ -26,11 +26,15 @@
             color: var(--text);
             line-height: 1.6;
             padding: 40px 20px;
+
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 80vw;
+            padding: 10vw;
             margin: auto;
+            overflow: hidden;
         }
 
         h1 {
@@ -56,31 +60,33 @@
         ul {
             list-style: none;
             margin-bottom: 20px;
+            padding-left: 0;
         }
 
+        li {
+            position: relative;
+            /* margin-left: 25vw; */
+            /* width: 50vw; */
+        }
         ul li {
             background: var(--card);
             padding: 10px 15px;
             margin-bottom: 8px;
             border-radius: 8px;
-            transition: 0.2s ease;
+            transition: background 0.2s ease, transform 0.2s ease;
+            position: relative; 
+            cursor: pointer;
         }
 
         ul li:hover {
             background: #334155;
-            transform: translateX(5px);
+            transform: translateX(3px); 
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-        }
-
-        .card {
-            background: var(--card);
-            padding: 20px;
-            border-radius: 12px;
         }
 
         footer {
@@ -92,21 +98,132 @@
         footer h3 {
             margin-bottom: 8px;
         }
+
         .noLinkStlye {
             text-decoration: none;
             color: inherit;
+        }
+
+        @media (max-width: 1024px) {
+            ul li {
+                display: block;
+                padding: 10px;
+            }
+
+
+        }
+    </style>
+    <!-- Cards -->
+    <style>
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
         .card a {
             display: block;
         }
 
+        /* Hover card effect */
         .card-link:hover .card {
             transform: translateY(-5px) scale(1.02);
             background: #334155;
         }
-        .card li {
+
+    </style>
+    <!-- Past Projects -->
+    <style>
+        /* Tooltip styling */
+        .tooltip {
+            position: absolute;
+            left: 105%;
+            top: 50%;
+            transform: translateY(-50%) scale(0.95);
+            width: 15vw;
+            padding: 12px;
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0;
+            pointer-events: none;
             transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .project {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .project li {
+            width: 40vw;
+        }
+        .project :nth-child(1){
+            z-index: 1004;
+        }
+        .project :nth-child(2){
+            z-index: 1003;
+        }
+        .project :nth-child(3){
+            z-index: 1002;
+        }
+        /* Show tooltip on hover */
+
+        li:hover .tooltip {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+            z-index: 1000;
+        }
+
+
+        @media (max-width: 1024px) {
+            .tooltip {
+                left: auto;
+                right: 0;
+                top: 100%;
+                transform: translateY(0) scale(0.95);
+                width: 100%;
+                font-size: 0.8rem;
+                pointer-events: none; /* still hover only */
+                opacity: 0;
+            }
+
+            /* Show tooltip on hover for mobile as well */
+            li:hover .tooltip {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+    </style>
+    <!--  Contact Information -->
+    <style>
+        .copy-text {
             cursor: pointer;
+            text-decoration: underline dotted;
+        }
+        .copy-text:active {
+            color: var(--accent)
+        }
+        .copy-tooltip {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            background-color: var(--accent);
+            color: black;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .copy-tooltip.show {
+            opacity: 1;
         }
     </style>
 </head>
@@ -246,24 +363,82 @@
     </h3>
 
     <h2>Past Projects</h2>
-    <ul>
-        <a href="https://www.tregocosheriff.com" class="noLinkStlye">
-            <li>Trego County Sherif Office - Backend</li>
-        </a>
-        <li>Bite Byte - Backend</li>
-        <a href="https://topsidetipoff.com" class="noLinkStlye">
-            <li>Topside Tipoff - Backend</li>
-        </a>
-    </ul>
+    <ul class="project">
+        <li>
+            <a href="https://www.tregocosheriff.com" class="noLinkStlye">
+                Trego County Sheriff’s Office — Backend Developer
+            </a>
+            <div class="tooltip">
+                Developed RESTful APIs, integrated Google Sheets for data access, and implemented secure, authenticated endpoints.
+            </div>
+        </li>
 
+        <li>
+            Bite Byte — Backend Developer
+            <div class="tooltip">
+                Designed core backend logic and managed data flow between services to ensure efficient and reliable processing.
+            </div>
+        </li>
+
+        <li>
+            <a href="https://topsidetipoff.com" class="noLinkStlye">
+                Topside Tipoff — Backend Developer
+            </a>
+            <div class="tooltip">
+                Resolved critical issues, removed unnecessary features, refactored the codebase from Express (JavaScript) to TypeScript, and initiated migration to NestJS for improved scalability and structure.
+            </div>
+        </li>
+    </ul>
     <footer>
         <h2>Contact Information</h2>
-        <h3>Personal Phone Number - (785)-874-8019</h3>
-        <h3>Personal Email - jddubble2@gmail.com</h3>
-        <h3>School Email - jaydee.white@fhnw.edu</h3>
+        <h3>Personal Phone Number - <span class="copy-text" data-copy="785-874-8019">(785)-874-8019</span></h3>
+        <h3>Personal Email - <span class="copy-text" data-copy="jddubble2@gmail.com">jddubble2@gmail.com</span></h3>
+        <h3>School Email - <span class="copy-text" data-copy="jaydee.white@fhnw.edu">jaydee.white@fhnw.edu</span></h3>
     </footer>
 
 </div>
+    <script>
+        document.querySelectorAll('.copy-text').forEach(el => {
+            let isCooldown = false; // prevent spamming
 
+            el.addEventListener('click', async () => {
+                if (isCooldown) return; // ignore clicks while active
+
+                const text = el.dataset.copy;
+                isCooldown = true;
+
+                try {
+                    // Modern Clipboard API
+                    await navigator.clipboard.writeText(text);
+                } catch (err) {
+                    // Fallback for older browsers / iOS Safari
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.focus();
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                    } catch {}
+                    document.body.removeChild(textarea);
+                }
+
+                // Create tooltip
+                let tooltip = document.createElement('span');
+                tooltip.className = 'copy-tooltip show';
+                tooltip.innerText = 'Copied!';
+                el.parentNode.appendChild(tooltip);
+
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                    tooltip.remove();
+                    isCooldown = false; // allow next click
+                }, 3000);
+            });
+        });
+    </script>
 </body>
 </html>
