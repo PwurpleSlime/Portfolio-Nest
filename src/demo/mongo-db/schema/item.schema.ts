@@ -5,10 +5,10 @@ export type ItemDocument = Item & Document
 @Schema()
 export class Item {
     @Prop()
-    name: String
+    name!: String
     @Prop()
-    num: Number
+    num!: Number
     @Prop( { default: 'Defaulty'})
-    default: String
+    default?: String
 }
 export const ItemSchema = SchemaFactory.createForClass(Item)
