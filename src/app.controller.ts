@@ -11,8 +11,8 @@ import { getHTMLPage } from './utility/getHTMLpage';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  //HTML PAGES ---
   @Public()
-  // @ApiBearerAuth('access-token')
   @Version('2')
   @Get()
   async getHello() {
@@ -25,11 +25,20 @@ export class AppController {
     return await getHTMLPage('aboutMe.html')
   }
   @Public()
+  @Get('/testSRCPath') 
+  async getTestSRCPath() {
+    return await getHTMLPage('testImageSRCPath.html')
+  }
+  // END HTML PAGES -----
+
+  @Public()
   @Version('2')
   @Get('/helloWorld')
   getHelloWorld() {
     return this.appService.getHello()
   }
+
+  // Auth Test -----
   @TFA()
   @Version('1')
   @ApiBearerAuth('access-token')
@@ -51,4 +60,5 @@ export class AppController {
   testClerk() {
     return this.appService.getHello()
   }
+  // Auth Test End -----
 }
