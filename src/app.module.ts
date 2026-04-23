@@ -13,6 +13,8 @@ import { FirebaseAdminProvider } from './auth/firebase/firebase-admin.module';
 import { FirebaseAuthRolesModule } from './auth/auth-routes/firebase-auth-roles/firebase-auth-roles.module';
 import { ClerkModule } from './auth/auth-routes/clerk/clerk.module';
 import { SqliteTaskManagerModule } from './demo/sqlite-task-manager/sqlite-task-manager.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path'
 // import { MongoDbModule } from './demo/mongo-db/mongo-db.module';
 // import { MongooseModule } from '@nestjs/mongoose'
 
@@ -22,6 +24,10 @@ import { SqliteTaskManagerModule } from './demo/sqlite-task-manager/sqlite-task-
     ConfigModule.forRoot({  // @dotenv
       isGlobal: true,
       envFilePath: 'env'
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'public'),
+      serveRoot: '/public'
     }),
     SpeakeasyAuthModule,
     ImageLoadingModule,
@@ -45,11 +51,12 @@ import { SqliteTaskManagerModule } from './demo/sqlite-task-manager/sqlite-task-
     }
   ],
 })
-// export class AppModule {}
+
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(RedirectMiddleware)
+      .exclude('/public/(.*)')
       .forRoutes('*')
   }
 }
