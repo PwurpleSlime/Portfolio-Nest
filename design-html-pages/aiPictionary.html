@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zoom Video Classifier</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            overflow: hidden;
+        }
+
+        #start-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        #app {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        /* SCREENSHOT BUTTON */
+        #screenshot-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: #16a34a;
+        }
+
+        #screenshot-btn:hover {
+            background: #15803d;
+        }
+
+        /* FLEX SPLIT */
+        #video-container {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+
+        /* RESIZER */
+        #resizer {
+            width: 6px;
+            cursor: col-resize;
+            background: #1e293b;
+        }
+
+        #resizer:hover {
+            background: #334155;
+        }
+
+        /* RIGHT PANEL */
+        #label-container {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .card {
+            flex: 1;
+            background: #1e293b;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .label {
+            font-weight: 500;
+        }
+
+        .percent {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="start-screen">
+    <h1>Teachable Machine - Screen Capture</h1>
+    <button onclick="init()">Start</button>
+</div>
+
+<div id="app">
+    <button id="screenshot-btn">Screenshot</button>
+    <div id="video-container"></div>
+    <div id="resizer"></div>
+    <div id="label-container"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+
+<script>
+const URL = "/public/tm-my-image-model/";
+
+let model, video, labelContainer;
+let isResizing = false;
+
+async function init() {
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("app").style.display = "flex";
+
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
+
+    model = await tmImage.load(modelURL, metadataURL);
+
+    const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+
+    video = document.createElement("video");
+    video.srcObject = stream;
+    video.autoplay = true;
+
+    document.getElementById("video-container").appendChild(video);
+
+    labelContainer = document.getElementById("label-container");
+
+    setupResizer();
+
+    video.onloadeddata = () => loop();
+}
+
+/* RESIZER */
+function setupResizer() {
+    const resizer = document.getElementById("resizer");
+    const left = document.getElementById("video-container");
+    const right = document.getElementById("label-container");
+
+    resizer.addEventListener("mousedown", () => isResizing = true);
+
+    window.addEventListener("mousemove", (e) => {
+        if (!isResizing) return;
+
+        const totalWidth = window.innerWidth;
+        const leftWidth = (e.clientX / totalWidth) * 100;
+
+        left.style.width = leftWidth + "%";
+        right.style.width = (100 - leftWidth) + "%";
+    });
+
+    window.addEventListener("mouseup", () => isResizing = false);
+}
+
+/* LOOP */
+async function loop() {
+    await predict();
+    requestAnimationFrame(loop);
+}
+
+/* PREDICT */
+async function predict() {
+    const prediction = await model.predict(video);
+
+    const top5 = prediction
+        .sort((a, b) => b.probability - a.probability)
+        .slice(0, 5);
+
+    const firstRects = {};
+    Array.from(labelContainer.children).forEach(child => {
+        firstRects[child.dataset.key] = child.getBoundingClientRect();
+    });
+
+    labelContainer.innerHTML = "";
+
+    top5.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.key = p.className;
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.innerText = p.className;
+
+        const percent = document.createElement("div");
+        percent.className = "percent";
+        percent.innerText = (p.probability * 100).toFixed(1) + "%";
+
+        card.appendChild(label);
+        card.appendChild(percent);
+        labelContainer.appendChild(card);
+    });
+
+    Array.from(labelContainer.children).forEach(child => {
+        const key = child.dataset.key;
+        if (!firstRects[key]) return;
+
+        const last = child.getBoundingClientRect();
+        const first = firstRects[key];
+
+        const dx = first.left - last.left;
+        const dy = first.top - last.top;
+
+        child.style.transform = `translate(${dx}px, ${dy}px)`;
+
+        requestAnimationFrame(() => {
+            child.style.transform = "";
+        });
+    });
+}
+
+/* SCREENSHOT */
+document.getElementById("screenshot-btn").addEventListener("click", takeScreenshot);
+
+function takeScreenshot() {
+    if (!video) return;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const link = document.createElement("a");
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+
+    link.download = `img/screenshot-${timestamp}.png`;
+    link.href = canvas.toDataURL("image/png");
+
+    link.click();
+}
+</script>
+
+</body>
+</html>
