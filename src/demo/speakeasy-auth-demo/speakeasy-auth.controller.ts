@@ -3,6 +3,7 @@ import { SpeakeasyAuthService } from './speakeasy-auth.service';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { authDTO } from './dto/auth.dto';
 import { Public } from '../../auth/decorators/public.decorator';
+import { Roles } from 'src/auth/decorators/roles/roles.decorator';
 
 @Controller('speakeasy-auth')
 @ApiTags("Speakeasy Auth", "Demo")
@@ -10,7 +11,7 @@ export class SpeakeasyAuthController {
   constructor(private readonly speakeasyAuthService: SpeakeasyAuthService) {}
 
   @Get('register')
-  @Public()
+  @Roles('owner')
   @Version('1')
   @ApiResponse({})
   async registerUser(){
@@ -18,7 +19,7 @@ export class SpeakeasyAuthController {
   }
 
   @Post('verify')
-  @Public()
+  @Roles('owner')
   @ApiBody({
     type: authDTO,
     examples: {default: {
@@ -32,7 +33,7 @@ export class SpeakeasyAuthController {
   }
 
   @Post('validate')
-  @Public()
+  @Roles('owner')
   @ApiBody({
     type: authDTO,
     examples: {default: {
