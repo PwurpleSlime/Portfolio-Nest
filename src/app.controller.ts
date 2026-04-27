@@ -25,6 +25,11 @@ export class AppController {
     return await getHTMLPage('aboutMe.html')
   }
   @Public()
+  @Get('/aiPictionary')
+  async getPictionary() {
+    return await getHTMLPage('aiPictionary.html')
+  }
+  @Public()
   @Get('/testSRCPath') 
   async getTestSRCPath() {
     return await getHTMLPage('testImageSRCPath.html')
