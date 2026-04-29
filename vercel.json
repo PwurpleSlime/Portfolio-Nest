@@ -3,7 +3,7 @@
   "crons": [
     {
       "path": "/runCRON",
-      "schedule": "41 19 * * *"
+      "schedule": "46 19 * * *"
     }
   ]
 }
