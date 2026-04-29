@@ -2,7 +2,7 @@ import { Controller, Get, Version } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { AppService } from './app.service';
 import { Public } from './auth/decorators/public.decorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
 import { TFA } from './auth/decorators/tfa.decorator';
 import { Roles } from './auth/decorators/roles/roles.decorator';
 import { Clerk } from './auth/decorators/clerk.decorator';
@@ -75,6 +75,16 @@ export class AppController {
   @Get('/testClerk')
   testClerk() {
     return this.appService.getHello()
+  }
+
+  @Public()
+  @Version('1')
+  @Get('/runCRON')
+  @ApiOperation({ summary: 'Run the scheduled cron task manually.' })
+  @ApiOkResponse({ description: 'Ran CRON' })
+  runCronRoute() {
+    this.handleThirtySecondCron();
+    return 'Ran CRON';
   }
 
   @Cron('*/30 * * * * *')
