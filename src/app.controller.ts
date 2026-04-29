@@ -1,4 +1,5 @@
 import { Controller, Get, Version } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { AppService } from './app.service';
 import { Public } from './auth/decorators/public.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
@@ -34,6 +35,16 @@ export class AppController {
   async getTestSRCPath() {
     return await getHTMLPage('testImageSRCPath.html')
   }
+  @Public()
+  @Get('/threePlaneTest/lightMode')
+  async getThreePlaneTestLM() {
+    return await getHTMLPage('threePlaneTestLightMode.html')
+  }
+  @Public()
+  @Get('/threePlaneTest/darkMode')
+  async getThreePlaneTestDM() {
+    return await getHTMLPage('threePlaneTestDarkMode.html')
+  }
   // END HTML PAGES -----
 
   @Public()
@@ -64,6 +75,11 @@ export class AppController {
   @Get('/testClerk')
   testClerk() {
     return this.appService.getHello()
+  }
+
+  @Cron('*/30 * * * * *')
+  handleThirtySecondCron() {
+    console.log('RAN CRON');
   }
   // Auth Test End -----
 }

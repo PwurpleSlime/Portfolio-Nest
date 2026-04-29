@@ -14,12 +14,14 @@ import { FirebaseAuthRolesModule } from './auth/auth-routes/firebase-auth-roles/
 import { ClerkModule } from './auth/auth-routes/clerk/clerk.module';
 import { SqliteTaskManagerModule } from './demo/sqlite-task-manager/sqlite-task-manager.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ScheduleModule } from '@nestjs/schedule';
 import { join } from 'path'
 // import { MongoDbModule } from './demo/mongo-db/mongo-db.module';
 // import { MongooseModule } from '@nestjs/mongoose'
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     // MongooseModule.forRoot(`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@localhost:27017/${process.env.MONGO_COLLECTION ?? 'test'}?authSource=admin`),
     ConfigModule.forRoot({  // @dotenv
       isGlobal: true,
