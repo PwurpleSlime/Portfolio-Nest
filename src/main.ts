@@ -50,4 +50,4 @@ bootstrap();
 // Notes
 // @Functional - Where something is so that be app as a whole is functional 
 // @Work - Things to work on when I get the chance
-// Npm installs so far - @nestjs/swagger, @nestjs/common, dotenv, @nestjs/config, express(for the redirect), speakeasy, uuid, node-json-db, firebase, firebase-admin, @clerk/backend, better-sqlite3, @nestjs/mongoose mongoose, @nestjs/serve-static
+// Npm installs so far - @nestjs/swagger, @nestjs/common, dotenv, @nestjs/config, express(for the redirect), speakeasy, uuid, node-json-db, firebase, firebase-admin, @clerk/backend, better-sqlite3, @nestjs/mongoose mongoose, @nestjs/serve-static, @nestjs/schedule
