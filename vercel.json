@@ -3,7 +3,8 @@
   "crons": [
     {
       "path": "/runCRON",
-      "schedule": "* * * * *"
+      "schedule": "40 19 * * *",
+      "timezone": "America/Denver"
     }
   ]
 }
