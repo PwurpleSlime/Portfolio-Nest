@@ -1,9 +1,9 @@
 {
-  "version": 3,
+  "version": 2,
   "crons": [
     {
       "path": "/runCRON",
-      "schedule": "*/30 * * * * *"
+      "schedule": "41 19 * * *"
     }
   ]
 }
