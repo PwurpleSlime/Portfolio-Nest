@@ -18,6 +18,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { join } from 'path'
 // import { MongoDbModule } from './demo/mongo-db/mongo-db.module';
 // import { MongooseModule } from '@nestjs/mongoose'
+import { SupabaseTestModule } from './supabase-test/supabase-test.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { join } from 'path'
     FirebaseAuthRolesModule,
     ClerkModule,
     SqliteTaskManagerModule,
+    SupabaseTestModule,
     // MongoDbModule,
   ],
   controllers: [
