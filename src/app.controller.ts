@@ -83,12 +83,12 @@ export class AppController {
   @ApiOperation({ summary: 'Run the scheduled cron task manually.' })
   @ApiOkResponse({ description: 'Ran CRON' })
   runCronRoute() {
-    this.handleThirtySecondCron();
+    this.handleThirtyMinuteCron();
     return 'Ran CRON';
   }
 
-  @Cron('*/30 * * * * *')
-  handleThirtySecondCron() {
+  @Cron('* */30 * * * *')
+  handleThirtyMinuteCron() {
     console.log('RAN CRON');
   }
   // Auth Test End -----
