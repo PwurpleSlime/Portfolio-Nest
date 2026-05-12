@@ -19,8 +19,6 @@
 
         async function onFileChange(e) {
             let target = e.target.files[0]
-            console.log(e.target)
-
             const fd = new FormData()
             fd.append("image", target)
 
