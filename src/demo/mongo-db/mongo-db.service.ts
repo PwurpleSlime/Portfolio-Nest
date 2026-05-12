@@ -21,14 +21,14 @@ export class MongoDbService {
     }
 
     async upsertById(id: string | undefined, item: mongoItemDTO) {
-        console.log('-----------')
-        console.log(id)
-        console.log('-----------')
+        if (process.env.LOGGER_ENABLED) console.log('-----------')
+        if (process.env.LOGGER_ENABLED) console.log(id)
+        if (process.env.LOGGER_ENABLED) console.log('-----------')
         if (!id) {
-            console.log('here')
+            if (process.env.LOGGER_ENABLED) ('here')
             return this.itemModel.create(item);
         }
-        console.log('there')
+        if (process.env.LOGGER_ENABLED) console.log('there')
         return this.itemModel.findByIdAndUpdate(
             id,
             { $set: item },
