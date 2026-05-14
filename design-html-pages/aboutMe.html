@@ -153,7 +153,10 @@
             transition: all 0.2s ease;
             z-index: 1000;
         }
-
+        .tooltip iframe {
+            display: block;
+            border: none;
+        }
         .project {
             display: flex;
             flex-direction: column;
@@ -176,7 +179,6 @@
         }
         .project :nth-child(2){
             z-index: 1003;
-            padding: 10px 15px;
         }
         .project :nth-child(3){
             z-index: 1002;
@@ -355,12 +357,29 @@
             </ul>
         </div>
     </div>
+    <h2>Certifications</h2>
+    <h3>Swift</h3>
+
+    <ul class="project">
+        
+            <li>
+                <a href="/public/SwiftAssociate.png" class="noLinkStlye">App Development with Swift – Associate</a>
+                <div class="tooltip">
+                    <img src="/public/SwiftAssociate.png" alt="Swift Associate" style="height: 13vh; width: 13vw;">
+                </div>
+            </li>
+            <li>
+                <a href="/public/SwiftCertifiedUser.png" class="noLinkStlye"">App Development with Swift – Certified User</a>
+                <div class="tooltip">
+                    <img src="/public/SwiftCertifiedUser.png" alt="Swift Certified User" style="height: 13vh; width: 13vw;">
+                </div>
+            </li>
+        
+    </ul>
     <h2>Github</h2>
     <h3>View my work and contributions</h3>
     <ul>
-        <a href="https://github.com/PwurpleSlime" class="noLinkStlye">
-            <li>My Github Profile</li>
-        </a>
+        <a href="https://github.com/PwurpleSlime" class="noLinkStlye"><li>My Github Profile</li></a>
     </ul>
     <h2>LinkedIn</h2>
     <h3>View my LinkedIn Account</h3>
@@ -391,7 +410,7 @@
         </li>
 
         <li>
-            Bite Byte — Backend Developer
+            <p style="padding: 10px 15px;">Bite Byte — Backend Developer</p>
             <div class="tooltip">
                 Designed core backend logic and managed data flow between services to ensure efficient and reliable processing.
             </div>
