@@ -35,6 +35,14 @@ async function bootstrap() {
     customSiteTitle: 'Portfolio API Docs',
     swaggerOptions: {
       url: '/api-docs-json', 
+      docExpansion: 'All',
+      persistAuthorization: false,
+      tagsSorter: 'alpha',
+      operationsSorter: (a, b) => {
+        const order = { get: 1, post: 2, put: 3, patch: 4, delete: 5 }
+
+        return order[a.get('method')] - order[b.get('method')]
+      },
     },
     customCssUrl: 'https://unpkg.com/swagger-ui-dist/swagger-ui.css',
     customJs: [

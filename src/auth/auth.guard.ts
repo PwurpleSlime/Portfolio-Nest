@@ -16,15 +16,15 @@ export class AuthGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        console.log('Auth Guard Successfully Hit')
+        if (process.env.LOGGER_ENABLED) console.log('Auth Guard Successfully Hit')
         const isPublic = this.reflector.getAllAndOverride<boolean>(
             IS_PUBLIC_KEY,
             [context.getHandler(), context.getClass],
         )
-        console.log('Before Public');
+        if (process.env.LOGGER_ENABLED) console.log('Before Public');
         
         if (isPublic) return true
-        console.log('After Public');
+        if (process.env.LOGGER_ENABLED) console.log('After Public');
         
         const request = context.switchToHttp().getRequest()
         const authHeader = request.headers.authorization
@@ -86,7 +86,7 @@ export class AuthGuard implements CanActivate {
         }
 
         request.user = decodedToken
-        console.log(request.user)
+        if (process.env.LOGGER_ENABLED) console.log(request.user)
 
         const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [context.getHandler(), context.getClass()])
 

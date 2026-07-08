@@ -62,7 +62,7 @@ export class MongoDbController {
   @Public()
   @Get()
   async createUser() {
-    console.log(process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD, process.env.MONGO_COLLECTION)
+    if (process.env.LOGGER_ENABLED) (process.env.MONGO_USERNAME, process.env.MONGO_PASSWORD, process.env.MONGO_COLLECTION)
     const user = new this.itemModel({ name: 'John', num: 17 });
     return user.save();
   }
