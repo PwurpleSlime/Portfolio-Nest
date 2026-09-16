@@ -479,8 +479,11 @@
                 // Remove after 3 seconds
                 setTimeout(() => {
                     tooltip.classList.remove('show');
-                    tooltip.remove();
-                    isCooldown = false; // allow next click
+
+                    setTimeout(() => {
+                        tooltip.remove();
+                        isCooldown = false;
+                    }, 300);
                 }, 3000);
             });
         });
