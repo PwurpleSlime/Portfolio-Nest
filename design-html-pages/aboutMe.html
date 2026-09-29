@@ -115,18 +115,18 @@
     </style>
     <!-- Cards -->
     <style>
-        .card {
+        .grid div {
             background: var(--card);
             padding: 20px;
             border-radius: 12px;
             transition: transform 0.2s ease, background 0.2s ease;
         }
-        .card a {
+        .grid div a {
             display: block;
         }
 
         /* Hover card effect */
-        .card-link:hover .card {
+        .card-link:hover .grid div {
             transform: translateY(-5px) scale(1.02);
             background: #334155;
         }
@@ -213,7 +213,7 @@
 
         }
     </style>
-    <!--  Contact Information -->
+    <!-- Contact Information -->
     <style>
         .copy-text {
             cursor: pointer;
@@ -261,7 +261,7 @@
 
     <h2>Front End Experience</h2>
     <div class="grid">
-        <div class="card">
+        <div>
             <h3>Languages</h3>
             <ul>
                 <a href="https://www.swift.org/documentation/" class="noLinkStlye">
@@ -276,7 +276,7 @@
             </ul>
         </div>
 
-        <div class="card">
+        <div>
             <h3>Frameworks</h3>
             <ul>
                 <a href="https://nextjs.org/docs" class="noLinkStlye">
@@ -288,7 +288,7 @@
             </ul>
         </div>
 
-        <div class="card">
+        <div>
             <h3>Libraries</h3>
             <ul>
                 <a href="https://threejs.org/docs/" class="noLinkStlye">
@@ -300,7 +300,7 @@
 
     <h2>Back End Experience</h2>
     <div class="grid">
-        <div class="card">
+        <div>
             <h3>Languages</h3>
             <ul>
                 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" class="noLinkStlye">
@@ -312,7 +312,7 @@
             </ul>
         </div>
 
-        <div class="card">
+        <div>
             <h3>Frameworks</h3>
             <ul>
                 <a href="https://docs.deno.com/runtime/" class="noLinkStlye">
@@ -324,7 +324,7 @@
             </ul>
         </div>
 
-        <div class="card">
+        <div>
             <h3>Libraries</h3>
             <ul>
                 <a href="https://swagger.io/docs/" class="noLinkStlye">
@@ -342,7 +342,7 @@
             </ul>
         </div>
 
-        <div class="card">
+        <div>
             <h3>Platforms</h3>
             <ul>
                 <a href="https://firebase.google.com/docs/auth?_gl=1*1vyls6p*_up*MQ..&gclid=Cj0KCQjwj47OBhCmARIsAF5wUEESy_aYWyLRIQZUcq6dXcU6bMRQaPCMFiID7iKCmy48oI_IKoxPgloaAkuFEALw_wcB&gclsrc=aw.ds" class="noLinkStlye">
@@ -442,21 +442,21 @@
     </footer>
 
 </div>
-    <script>
+    <script> // Tooltip copy script
         document.querySelectorAll('.copy-text').forEach(el => {
-            let isCooldown = false; // prevent spamming
+            let isCooldown = false; // prevents spamming
 
             el.addEventListener('click', async () => {
-                if (isCooldown) return; // ignore clicks while active
+                if (isCooldown) return; // ignores clicks while active
 
                 const text = el.dataset.copy;
+                
                 isCooldown = true;
-
                 try {
-                    // Modern Clipboard API
+                    // modern day clipboard's API
                     await navigator.clipboard.writeText(text);
                 } catch (err) {
-                    // Fallback for older browsers / iOS Safari
+                    // saftey for older browsers 
                     const textarea = document.createElement('textarea');
                     textarea.value = text;
                     textarea.style.position = 'fixed';
@@ -470,13 +470,13 @@
                     document.body.removeChild(textarea);
                 }
 
-                // Create tooltip
+                // Create Tooltip
                 let tooltip = document.createElement('span');
                 tooltip.className = 'copy-tooltip show';
                 tooltip.innerText = 'Copied!';
                 el.parentNode.appendChild(tooltip);
 
-                // Remove after 3 seconds
+                // Remove Tooltip
                 setTimeout(() => {
                     tooltip.classList.remove('show');
 
