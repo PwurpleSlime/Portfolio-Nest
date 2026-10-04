@@ -31,6 +31,12 @@ import { SupabaseTestModule } from './supabase-test/supabase-test.module';
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'public'),
       serveRoot: '/public'
+    }, {
+      rootPath: join(process.cwd(), 'styles'),
+      serveRoot: '/styles'
+    }, {
+      rootPath: join(process.cwd(), 'scripts'),
+      serveRoot: '/scripts'
     }),
     SpeakeasyAuthModule,
     ImageLoadingModule,
@@ -60,7 +66,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(RedirectMiddleware)
-      .exclude('/public/(.*)')
+      .exclude('/public/(.*)', '/styles/(.*)', '/scripts/(.*)')
       .forRoutes('*')
   }
 }

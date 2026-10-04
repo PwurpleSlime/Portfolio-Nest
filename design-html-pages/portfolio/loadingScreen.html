@@ -4,59 +4,53 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Jaydee White's Portfolio - Landing Page</title>
-<style>
-    :root {
-        --text: #e2e8f0;
-        --bg: #0f172a;
-        --underlinePurple: #551A8B
-    }
-    html, body {
-        background-color: var(--bg);
-        overscroll-behavior-y: auto;
-    }
-    body { 
-        margin: 0; 
-        overflow: hidden;
-        /* background-color: green; */
-    }
-    canvas { display: block; }
-    a {
-        color: var(--text);
-        text-decoration: underline;
-        text-decoration-color: var(--underlinePurple);
-        padding: 15px;
-        text-align: center;
-    }
-    a:active {
-        text-decoration-color: red;
-
-    }
-    main {
-        position: absolute;
-        z-index: 3;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    @media (max-width: 768px){
-        main {
-            flex-direction: column;
-        }
-        @media (max-height: 368px) {
-            main a{
-                font-size: smaller;
-            }
-        }
-    }
-</style>
+<link rel="stylesheet" href="/styles/portfolio-global.css">
+<link rel="stylesheet" href="/styles/loading-screen.css">
+<link rel="stylesheet" href="/styles/portfolio-tooltip.css">
 </head>
 <body>
-    <main>
-        <a href="/aboutMe"><h1>Go to the About Me</h1></a>
-        <a href="/api-docs"><h1>Go to the Api-Docs</h1></a>
+    <main class="container">
+        <div></div> <!-- Awfull way to compress the justify, fix later -->
+        <div></div>
+        <div></div>
+        <ul class="loading-links">
+            <li class="tooltip-container">
+                <a href="/aboutMe"><h1>Go to the About Me</h1></a>
+                <div class="tooltip tooltip--below">
+                    Read about my background, current studies, career focus, and LinkedIn profile.
+                </div>
+            </li>
+        </ul>
+        <div>
+            <ul class="loading-links">
+                <li class="tooltip-container">
+                    <a href="/skills"><h1>Go to My Skills</h1></a>
+                    <div class="tooltip tooltip--below">
+                        Browse my front-end and back-end technologies, tools, platforms, and Swift certifications.
+                    </div>
+                </li>
+                <li class="tooltip-container">
+                    <a href="/projects"><h1>Go to My Projects</h1></a>
+                    <div class="tooltip tooltip--below">
+                        See selected past projects, my roles and contributions, and links to my GitHub profile.
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <ul class="loading-links">
+            <li class="tooltip-container">
+                <a href="/api-docs"><h1>Go to the Api-Docs</h1></a>
+                <div class="tooltip tooltip--below">
+                    Explore the API's documented endpoints, request and response details, and interactive controls.
+                </div>
+            </li>
+        </ul>
+
+
+        <div></div>
+        <div></div>
+        <div></div>
     </main>
 <script type="module">
     import * as THREE from 'https://unpkg.com/three@0.165.0/build/three.module.js';

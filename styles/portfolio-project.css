@@ -1,0 +1,27 @@
+.project {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.project li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: inherit;
+}
+.project li {
+    width: 40vw;
+    padding: 0px;
+}
+.project :nth-child(1){
+    z-index: 1004;
+}
+.project :nth-child(2){
+    z-index: 1003;
+}
+.project :nth-child(3){
+    z-index: 1002;
+}
+
