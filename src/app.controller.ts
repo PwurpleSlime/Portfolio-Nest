@@ -17,13 +17,25 @@ export class AppController {
   @Version('2')
   @Get()
   async getHello() {
-    return await getHTMLPage('loadingScreen.html')
+    return await getHTMLPage('portfolio/loadingScreen.html')
+  }
+  @Public()
+  @Version('1')
+  @Get('/projects')
+  async getProjects() {
+    return await getHTMLPage('portfolio/projects.html')
+  }
+  @Public()
+  @Version('1')
+  @Get('/skills')
+  async getSkills() {
+    return await getHTMLPage('portfolio/skills.html')
   }
   @Public()
   @Version('2')
   @Get('/aboutMe')
   async getAboutMe() {
-    return await getHTMLPage('aboutMe.html')
+    return await getHTMLPage('portfolio/aboutMe.html')
   }
   @Public()
   @Get('/aiPictionary')
@@ -77,19 +89,22 @@ export class AppController {
     return this.appService.getHello()
   }
 
-  @Public()
-  @Version('1')
-  @Get('/runCRON')
-  @ApiOperation({ summary: 'Run the scheduled cron task manually.' })
-  @ApiOkResponse({ description: 'Ran CRON' })
-  runCronRoute() {
-    this.handleThirtyMinuteCron();
-    return 'Ran CRON';
-  }
 
-  @Cron('* */30 * * * *')
-  handleThirtyMinuteCron() {
-    console.log('RAN CRON');
-  }
+  // CRON DISABLED
+  
+  // @Public()
+  // @Version('1')
+  // @Get('/runCRON')
+  // @ApiOperation({ summary: 'Run the scheduled cron task manually.' })
+  // @ApiOkResponse({ description: 'Ran CRON' })
+  // runCronRoute() {
+  //   this.handleThirtyMinuteCron();
+  //   return 'Ran CRON';
+  // }
+
+  // @Cron('* */30 * * * *')
+  // handleThirtyMinuteCron() {
+  //   console.log('RAN CRON');
+  // }
   // Auth Test End -----
 }

@@ -1,0 +1,29 @@
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #38bdf8;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --underlinePurple: #551A8B
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    background-color: var(--bg);
+}
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    /* padding: 40px 20px; */
+
+    overflow-x: hidden;
+}
+
+.noLinkStlye {
+    text-decoration: none;
+    color: inherit;
+}

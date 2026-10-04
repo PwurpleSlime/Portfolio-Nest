@@ -1,0 +1,78 @@
+html,
+body {
+    overscroll-behavior-y: auto;
+}
+
+body {
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+}
+
+a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--underlinePurple);
+    padding: 15px;
+    text-align: center;
+}
+
+a:active {
+    text-decoration-color: red;
+}
+
+main {
+    position: absolute;
+    z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+main div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100vw;
+}
+
+.loading-links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100vw;
+    list-style: none;
+}
+
+.loading-links li {
+    list-style: none;
+}
+
+@media (max-width: 768px) {
+    main div {
+        flex-direction: column;
+    }
+
+    .loading-links {
+        flex-direction: column;
+    }
+}
+
+@media (max-height: 368px) {
+    main a,
+    main div a {
+        font-size: smaller;
+    }
+}
+
+@media (max-height: 124px) {
+    main a,
+    main div a {
+        font-size: x-small;
+    }
+}
