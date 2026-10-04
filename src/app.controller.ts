@@ -1,5 +1,5 @@
 import { Controller, Get, Version } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+// import { Cron } from '@nestjs/schedule';
 import { AppService } from './app.service';
 import { Public } from './auth/decorators/public.decorator';
 import { ApiBearerAuth, ApiOperation, ApiOkResponse } from '@nestjs/swagger';
@@ -91,7 +91,7 @@ export class AppController {
 
 
   // CRON DISABLED
-  
+
   // @Public()
   // @Version('1')
   // @Get('/runCRON')
